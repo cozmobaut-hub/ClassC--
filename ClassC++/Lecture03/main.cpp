@@ -38,13 +38,13 @@ int main() {
     mt19937 mt( rd() );
     
     // specify a uniform integer distribution mapped to a specific range
-    uniform_int_distribution<int> intDist(20, 24);
+    uniform_int_distribution<int> dist(20, 24);
     cout << "Here are five random ints:   ";
-    cout << intDist(mt) << "\t";    // generate the next value from the PRNG mapped to our distribution
-    cout << intDist(mt) << "\t";
-    cout << intDist(mt) << "\t";
-    cout << intDist(mt) << "\t";
-    cout << intDist(mt) << endl;
+    cout << dist(mt) << "\t";    // generate the next value from the PRNG mapped to our distribution
+    cout << dist(mt) << "\t";
+    cout << dist(mt) << "\t";
+    cout << dist(mt) << "\t";
+    cout << dist(mt) << endl;
 
     cout << endl;
 
@@ -88,3 +88,5 @@ int main() {
 // uniform_int_distribution<int> dist(1, 6); // define the range
 // int random_number = dist(mt); // generate number 
 // Note: Different systems may have different sizes for data types (e.g., int may be 2 or 4 bytes), so always check your system's specifications for portability.
+// DON'T USE RAND(), DON'T USE RAND % 100 OR RAND_MAX +1 FOR NUMBERS, DON'T MESS WITH FLOATING POINTS, because then you'll have 2.00001 problems instead of 1
+// Use random_device and mt19937/mt19937_64 instead for better randomness and distribution control. "uniform_int_distribution" and "uniform_real_distribution" for specific ranges.
