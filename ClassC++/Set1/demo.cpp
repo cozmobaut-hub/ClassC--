@@ -17,4 +17,4 @@ int main() {
     cout << "Total height: " << total << " ft (WRAPPED!)" << endl; 
     
     return 0;
-}
+} 
