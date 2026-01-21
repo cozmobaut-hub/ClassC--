@@ -59,7 +59,7 @@ int main() {
     
     return 0;
 }
-// Random number notes
+// Random number notes 
 // How are values stored in memory? Binary!
 // Data type tells us how to interpret binary values.
 // Statically typed, variables will always refer to the same data type.
