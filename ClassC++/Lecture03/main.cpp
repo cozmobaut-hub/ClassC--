@@ -59,3 +59,19 @@ int main() {
     
     return 0;
 }
+// Random number notes
+// How are values stored in memory? Binary!
+// Data type tells us how to interpret binary values.
+// Statically typed, variables will always refer to the same data type.
+// Integer types: char, short, int, long, long long (signed and unsigned variants)
+// Floating point types: float, double, long double
+// Integer types store whole numbers, floating point types store real numbers (with fractional parts)
+// Integer types have limited ranges based on their size in memory (e.g., short is typically 2 bytes, so -32,768 to 32,767 for signed short)
+// Floating point types have much larger ranges but limited precision.
+// Overflow occurs when a calculation exceeds the maximum value a data type can hold, causing it to wrap around to the minimum value.
+// Use larger data types or floating point types to avoid overflow in calculations. 
+// Memory Map: int numCars = 5; (need 4 bytes for int)
+// Address:   0xf3da8004 -> numCars value 0x00000005
+// double temp = 37.1 0xf3da880c and 0xf3da8010 Identifier temp value 0x40428ccccccccccd
+// Char mcAns; mcAns = 'd', mcAns += 1 -> 'e' (next ASCII value)
+// you can temporarily type case as well: (int)mcAns + 1 -> 102
