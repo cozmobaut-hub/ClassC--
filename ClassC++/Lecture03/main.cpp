@@ -75,3 +75,16 @@ int main() {
 // double temp = 37.1 0xf3da880c and 0xf3da8010 Identifier temp value 0x40428ccccccccccd
 // Char mcAns; mcAns = 'd', mcAns += 1 -> 'e' (next ASCII value)
 // you can temporarily type case as well: (int)mcAns + 1 -> 102
+// Random number generation requires a source of entropy (randomness).
+// Computers are deterministic, so they use pseudorandom number generators (PRNGs) that use algorithms to produce sequences of numbers that approximate the properties of random numbers.
+// C++11 introduced a comprehensive random number generation library that includes various PRNGs and distributions.
+// Common PRNGs include Mersenne Twister (mt19937), which is widely used for its speed and quality of randomness.
+// Distributions define how random numbers are mapped to specific ranges or patterns (e.g., uniform, normal).
+// Always seed your PRNG with a good source of entropy (like random_device) to ensure different sequences on each run.
+// Example distributions: uniform_int_distribution, uniform_real_distribution, normal_distribution, etc.   
+// Example usage:
+// random_device rd; // obtain a random number from hardware
+// mt19937 mt(rd()); // seed the generator
+// uniform_int_distribution<int> dist(1, 6); // define the range
+// int random_number = dist(mt); // generate number 
+// Note: Different systems may have different sizes for data types (e.g., int may be 2 or 4 bytes), so always check your system's specifications for portability.
