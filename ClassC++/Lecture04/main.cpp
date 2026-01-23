@@ -28,10 +28,10 @@
  * 
  */
 
-#include <cmath>                    // For sqrt()
-#include <iomanip>                  // For setprecision()
-#include <iostream>                 // For cin, cout, etc.
-using namespace std;                // saves us from having to specify std:: everytime
+#include <cmath>            // For sqrt()
+#include <iomanip>          // For setprecision()
+#include <iostream>         // For cin, cout, etc.
+using namespace std;        // saves us from having to specify std:: everytime
 
 int main() {
     
@@ -47,7 +47,10 @@ int main() {
 
     // if the pie is greater than 10 dollars, deduct $3.14
     // otherwise, deduct $1.00
-    
+    // if (conditional)
+    if (piePrice > 10.0){discountedPrice = piePrice - 3.14;} 
+    else {discountedPrice = piePrice - 1.0;}
+
     cout << "After discount, the pie costs $" << discountedPrice << endl;
 
     //-----------------------------------------------------------------------------------
@@ -59,9 +62,8 @@ int main() {
     cin >> age;
 
     // if age is between 13 and 19, inclusive
-    cout << "Teenager!" << endl;
-    // otherwise, not
-    cout << "Not a teen" << endl;
+    if (age >= 13 && age <= 19) {cout << "Teenager!" << endl;} 
+    else {cout << "Not a teen" << endl;}
 
     //-----------------------------------------------------------------------------------
     // Programming Task #3 - When sqrt(n)^2 is not n
@@ -76,11 +78,8 @@ int main() {
     // square the square root - should be n again
     double squareRootSquared = squareRoot * squareRoot;
     // test if we got n back
-    if( squareRootSquared == value ) {
-        cout << "sqrt(" << value << ") squared is " << value << endl;
-    } else {
-        cout << "sqrt(" << value << ") squared is not " << value << " but is " << setprecision(18) << squareRootSquared  << endl;
-    }
+    if (squareRootSquared == value) {cout << "sqrt(" << value << ") squared is " << value << endl;} 
+    else {cout << "sqrt(" << value << ") squared is not " << value << " but is " << setprecision(18) << squareRootSquared << endl;}
 
     return 0;
 }
