@@ -35,10 +35,10 @@ using namespace std;    // saves us from having to specify std:: everytime
 int main() {
     // seed a Mersenne Twister pseudorandom number generator (PRNG)
     random_device rd;
-    mt19937 mt( rd() );
+    mt19937 mt( rd() ); // route rd through the mt PRNG
     
     // specify a uniform integer distribution mapped to a specific range
-    uniform_int_distribution<int> dist(20, 24);
+    uniform_int_distribution<int> dist(20, 24); // call a distribution object and typecast it to int, with range 20 to 24 inclusive
     cout << "Here are five random ints:   ";
     cout << dist(mt) << "\t";    // generate the next value from the PRNG mapped to our distribution
     cout << dist(mt) << "\t";
