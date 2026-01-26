@@ -1,36 +1,12 @@
-/* 
- * CSCI 200: Lecture 03: C++11 Random and Makefile usage
+/* CSCI 200: Lab 1A: Hello World 
  *
- * Author: Dr. Jeffrey Paone
- *
- * Demonstrates how to use the C++11 random library to generate random numbers in a given range
- * 
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- * 
+ * Author: Austin Haas
+ * Date: 1/25/2026
  */
 
-#include <iostream>     // For cin, cout, etc.
-#include <random>       // C++11 random library
-using namespace std;    // saves us from having to specify std:: everytime
+#include <iostream>     
+#include <random>      
+using namespace std;   
 
 int main() {
     // seed a Mersenne Twister pseudorandom number generator (PRNG)
