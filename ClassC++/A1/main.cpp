@@ -17,85 +17,107 @@ const int NUM_DOORS = 3;
 int main() {
      /******** INSERT YOUR CODE BELOW HERE ********/
     random_device rd;
-    mt19937 gen(rd());
+    mt19937 mt(rd());
     uniform_int_distribution<int> dist(1, NUM_DOORS);
-    
-    char play;
-    
-    do {
-        int car = dist(gen);
-        int choice;
-        
-        
-        do {
-            cout << "Choose a door 1, 2, or 3: ";
-            cin >> choice;
-        } while (choice < 1 || choice > NUM_DOORS || !cin);
-        
 
-        int goat;
-        if (choice == car) {
-            do goat = dist(gen); while (goat == choice);
+    char play;
+
+    do {
+        int carDoor = dist(mt);
+        int userChoice; 
+        do {
+        cout << "Choose a door (1, 2, or 3): ";
+        cin >> userChoice;
+        } while (userChoice < 1 || userChoice > NUM_DOORS || !cin);
+
+        int revealedDoor;
+        if (userChoice == carDoor) {
+            do {
+                revealedDoor = dist(mt);
+            } while (revealedDoor == userChoice);
         } else {
-            goat = 6 - choice - car;  
+            revealedDoor = 6 - userChoice - carDoor;
         }
-        cout << "Door #" << goat << " contains a goat." << endl;
-        
-        
-        char sw;
+        cout << "Door #" << revealedDoor << " contains a goat." << endl;    
+
+        char switchChoice;
         do {
             cout << "Do you wish to change doors, Y or N: ";
-            cin >> sw;
-            sw = toupper(sw);
-        } while (sw != 'Y' && sw != 'N');
-        
-        
-        int final = (sw == 'Y') ? (6 - choice - goat) : choice;
-        
-        
+            cin >> switchChoice;
+            switchChoice = toupper(switchChoice);
+        } while (switchChoice != 'Y' && switchChoice != 'N');   
+    
+        int final;
+
+        if (switchChoice == 'Y') {
+            final = 6 - userChoice - revealedDoor;
+        } else {
+            final = userChoice;
+        }
+
         cout << "Behind your Door #" << final << " is a ";
-        if (final == car) {
-            cout << "CAR!" << endl << "Good job ";
-            (sw == 'Y') ? cout << "switching" : cout << "not switching";
+        if (final == carDoor) {
+            cout << "CAR!" << endl << "Good job ";;
+            if (switchChoice == 'Y') {
+                cout << "switching";
+            } else {
+                cout << "not switching";
+            }
             cout << " doors!" << endl;
         } else {
             cout << "goat" << endl;
-            (sw == 'Y') ? cout << "You shouldn't have switched doors." : cout << "You should have switched doors.";
-            cout << endl;
+            if (switchChoice == 'Y') {
+                cout << "You shouldn't have switched doors." << endl;
+            } else {
+                cout << "You should have switched doors." << endl;
+            }
         }
-        
-        
+
         do {
             cout << "Do you wish to play again, Y or N: ";
             cin >> play;
             play = toupper(play);
         } while (play != 'Y' && play != 'N');
-        
-    } while (play == 'Y');
-    
-    
-    int trials;
+
+    } while (play == 'Y' || play == 'y');
+
+    unsigned int trials;
     do {
         cout << "How many trials do you wish to run: ";
         cin >> trials;
-    } while (trials < 1);
-    
-    int stay = 0, swtch = 0;
-    for (int i = 0; i < trials; i++) {
-        int car = dist(gen);
-        int choice = dist(gen);
-        int goat = (choice == car) ? dist(gen) : (6 - choice - car);
-        int other = 6 - choice - goat;
-        if (choice == car) stay++;
-        if (other == car) swtch++;
+    } while (trials < 1); 
+
+    unsigned int stayWins = 0;
+    unsigned int switchWins = 0;
+
+    for (unsigned int i = 0; i < trials; ++i) {
+        int carDoor = dist(mt);
+        int userChoice = dist(mt);
+
+        int revealedDoor;
+        if (userChoice == carDoor) {
+            do {
+                revealedDoor = dist(mt);
+            } while (revealedDoor == userChoice);
+        } else {
+            revealedDoor = 6 - userChoice - carDoor;
+        }
+
+        int stayFinal = userChoice;
+        int switchFinal = 6 - userChoice - revealedDoor;
+
+        if (stayFinal == carDoor) {
+            ++stayWins;
+        }
+        if (switchFinal == carDoor) {
+            ++switchWins;
+        }
     }
-    
-    double pstay = stay * 100.0 / trials;
-    double psw = swtch * 100.0 / trials;
-    
-    cout << trials << " Trials:" << endl;
-    cout << "Stay:   " << stay << "       " << pstay << "%" << endl;
-    cout << "Switch: " << swtch << "       " << psw << "%" << endl;
+
+    cout << "Out of " << trials << " trials:" << endl;
+    cout << "Stay " << stayWins << "      " << (stayWins * 100.0 / trials) << "%"<< endl;
+    cout << "Switch " << switchWins << "    " << (switchWins * 100.0 / trials) << "%"<< endl;
+
      /******** INSERT YOUR CODE ABOVE HERE ********/
     return 0; // signals the operating system that our program ended OK.
 }
