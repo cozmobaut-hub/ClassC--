@@ -108,30 +108,38 @@ float multiply( float a, float b ){
  * @brief runs test summing numbers in the range [1, N]
  */
 void loop_test_1() {
-    // FIX =
-    // TESTS (provide input/output pairs that verify proper operation): 
+    // FIX = initialize sum and fix loop bound to include n
+    // TESTS (provide input/output pairs that verify proper operation):
+    //   Input: 2   → Output: 3
+    //   Input: 3   → Output: 6
+    //   Input: 5   → Output: 15
+    //   Input: 10  → Output: 55
 
     cout << endl;
     cout << "******************" << endl;
     cout << "Section Looping 1 " << endl;
     cout << "******************" << endl;
 
-    int n;  
+    int n;
     cout << "Enter a number greater than 1 to sum up to: ";
     cin >> n;
 
-    int sum;
-    for( int i = 1; i < n; ++i ) {
-         sum += i;
-     }
-    cout << "The sum of the numbers from 1 to " << n << " (inclusive) is: " << sum << endl;
+    long int sum = 0;                // initialize
+    for (int i = 1; i <= n; ++i) {   // include n
+        sum += i;
+    }
+
+    cout << "The sum of the numbers from 1 to " << n
+         << " (inclusive) is: " << sum << endl;
 }
+
 
 /**
  * @brief runs test summing set of prices entered by the user
  */
 void loop_test_2() {
-    // FIX =
+    // FIX = correct counter increment position, instead of 0 so it counts properly, also initialize totalPrice so you're not 
+    // adding to garbage value
     // TESTS (provide input/output pairs that verify proper operation): 
 
     cout << endl;
@@ -144,10 +152,9 @@ void loop_test_2() {
     cin >> numItems;
     cout << endl;
 
-    int counter = 1;
-    float totalPrice, price;
-    while (counter <= numItems) {
-        totalPrice = 0;
+    int counter = 0;
+    float totalPrice = 0, price;
+    while (counter < numItems) {
         cout << "Enter the price of item " << counter << ": ";
         cin >> price;
         totalPrice += price;
