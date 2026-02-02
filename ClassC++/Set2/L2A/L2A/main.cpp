@@ -167,8 +167,12 @@ void loop_test_2() {
  * @brief runs test summing numbers in the range [1, N]
  */
 void loop_test_3() {
-    // FIX =
+    // FIX = init counter at 0 so agin, you are not summing garBAGE VALUES  
     // TESTS (provide input/output pairs that verify proper operation): 
+    //  Input: 2   → Output: 3
+    //  Input: 3   → Output: 6
+    //  Input: 5   → Output: 15
+    //  Input: 10  → Output: 55
 
     cout << endl;
     cout << "******************" << endl;
@@ -179,12 +183,12 @@ void loop_test_3() {
     cout << "What number do you wish me to sum to?" << endl;
     cin >> n;
 
-    int sum = 0, counter = 1;
+    int sum = 0, counter =0;
     do {
         sum += counter;
         cout << "Sum so far: " << sum << endl;
-    } while (counter <= sum);
-
+        counter++;
+    } while (counter <= n);
     cout << endl << "Section III Recap" << endl;
 
     cout << "I calculated the sum of numbers from 1 to " << n << " (inclusive) as " << sum << endl;
@@ -194,8 +198,12 @@ void loop_test_3() {
  * @brief runs test summing i^2 in the range [1, N]
  */
 void loop_test_4() {
-    // FIX =
+    // FIX = change sum to unsigned long int to avoid overflow for larger n
     // TESTS (provide input/output pairs that verify proper operation): 
+    //  Input: 2   → Output: 5
+    //  Input: 3   → Output: 14
+    //  Input: 5   → Output: 55
+    //  Input: 10  → Output: 385
 
     cout << endl;
     cout << "******************" << endl;
@@ -208,9 +216,9 @@ void loop_test_4() {
     cout << "Enter N: ";
     cin >> n;
 
-    int sum = 0;
-    for( int i = n; i > 0; ++i ) {
-        sum += i*i;
+    unsigned long int sum = 0;
+    for( int i = n; i > 0; --i ) {
+        sum += i * i;
     }
 
     cout << "The sum of squares from 1 to " << n << " is: " << sum << endl;
@@ -220,8 +228,11 @@ void loop_test_4() {
  * @brief runs test summing i^3 in the range [1, N]
  */
 void loop_test_5() {
-    // FIX =
+    // FIX = change while condition from counter < 10 to counter <= n; initialize counter=1 before loop
     // TESTS (provide input/output pairs that verify proper operation): 
+    // Input: 1 → Output: The sum of cubes from 1 to 1 is: 1
+    // Input: 5 → Output: The sum of cubes from 1 to 5 is: 225
+    // Input: 10 → Output: The sum of cubes from 1 to 10 is: 3025
 
     cout << endl;
     cout << "******************" << endl;
@@ -235,11 +246,10 @@ void loop_test_5() {
     cin >> n;
 
     int sum = 0, counter = 1;
-    while( counter < 10 ) {
+    while( counter <= n ) {
         sum += (counter * counter * counter);
+        ++counter;
     }
-
-    counter++;
 
     cout << "The sum of cubes from 1 to " << n << " is: " << sum << endl;
 }
@@ -248,8 +258,11 @@ void loop_test_5() {
  * @brief runs test using function to add five to an entered value
  */
 void function_test_1() {
-    // FIX =
+    // FIX = add_five function to add five and return the result
     // TESTS (provide input/output pairs that verify proper operation): 
+    //   Input: 0   → Output: 5
+    //   Input: 3   → Output: 8
+    //   Input: -2  → Output: 3
 
     cout << endl;
     cout << "******************" << endl;
@@ -296,8 +309,9 @@ void function_test_2() {
  * @brief runs test to generate five random integers within a provided range
  */
 void function_test_3() {
-    // FIX =
+    // FIX = generate random integers within the provided range, originally had no range
     // TESTS (provide input/output pairs that verify proper operation): 
+    // Input: min=10, max=20  → Output:  17 16 18 18 15 
 
     cout << endl;
     cout << "******************" << endl;
@@ -320,9 +334,11 @@ void function_test_3() {
  * @brief runs test to use function to sum three values
  */
 void function_test_4() {
-    // FIX =
+    // FIX = Fixed the sum function to sum all three parameters
     // TESTS (provide input/output pairs that verify proper operation): 
-
+    // Input: 1 2 3  → Output: 6
+    // Input: 5 5 5  → Output: 15
+    // Input: -1 1 0 → Output: 0
     cout << endl;
     cout << "******************" << endl;
     cout << "Section Function 4" << endl;
@@ -340,9 +356,9 @@ void function_test_4() {
  * @brief runs test to generate five random floats within a provided range
  */
 void function_test_5() {
-    // FIX =
+    // FIX = generate random floats within the provided range, originally had no range
     // TESTS (provide input/output pairs that verify proper operation): 
-
+    // Input: min=1.5, max=5.5  → Output:  3.2 4.7 1.9 5.1 2.6
     cout << endl;
     cout << "******************" << endl;
     cout << "Section Function 5" << endl;
@@ -365,9 +381,10 @@ void function_test_5() {
  * @brief runs test to use function to multiply two provided numbers
  */
 void function_test_6() {
-    // FIX =
+    // FIX = define multiply function to return product of two float parameters, originally didn't actually define it
     // TESTS (provide input/output pairs that verify proper operation): 
-
+    // Input: 2.0 3.0  → Output: 6.0
+    // Input: 1.5 4.0  → Output: 6.
     cout << endl;
     cout << "******************" << endl;
     cout << "Section Function 6" << endl;
