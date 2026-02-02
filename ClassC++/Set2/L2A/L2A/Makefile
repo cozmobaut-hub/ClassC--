@@ -19,7 +19,7 @@ CPPVERSION = -std=c++17
 
 OBJECTS = $(SRC_FILES:.cpp=.o)
 
-ARCHIVE_EXTENSION = zip
+ARCHIVE_EXTENSION = tar.gz
 
 ifeq ($(shell echo "Windows"), "Windows")
 	TARGET = $(PROJECT).exe
