@@ -1,60 +1,513 @@
+**Module Learning Outcomes**
 
-CSCI 200 Exam 1 Learning Outcomes
+**C++: C++ Programming**
 
-Course Learning Outcomes
-1. Design an algorithm to solve a problem by breaking the overarching problem into smaller modular
-components using abstraction and object-oriented design with inheritance.
-2. Translate the algorithm into a program using proper C++ syntax and fundamental programming constructs
-(e.g. control structures, I/O, classes).
-3. Recite & apply frequently used Linux command line commands and compile a program using a command line
-build system.
+Discuss the differences between programming languages, specifically Python & C++  
+**Answer: The differences between programming languages: specifically Python and C++**
 
-Module Learning Outcomes
-C++: C++ Programming
-• Discuss the differences between programming languages, specifically Python & C++
-A: The differences between programming languages: specifically Python and C++
-• Create a Hello World program, construct a simple interactive application, and build the program via the terminal.
-• List C++ primitive data types and explain the appropriate use of each data type.
-• List & identify C++ arithmetic operators, translate math equations to C++, and solve arithmetic expressions.
-• Discuss the effects of a statically typed language.
-• Convert one data type to another.
-• Recite the order of operations and evaluate an expression.
-• Explain how C++ generates random numbers and write a program that generates random numbers.
-• Identify C++ control structures and conclude which branch a sample program will execute.
-• List C++ logic operators and evaluate Boolean expressions consisting of multiple logic operators.
-• Evaluate the resultant output of a code block containing a control structure.
-• Convert a program written with a for loop to a program using a while loop and vice versa.
-• Identify and correct errors in program structure and logic.
+- Python is interpreted and dynamically typed (meaning they can become float -> int or other), while C++ is compiled and statically typed .  
+- Python emphasizes readability with indentation-based syntax; C++ uses braces and semicolons for structure .  
+- C++ offers direct memory management and higher performance for systems programming; Python is slower but easier for rapid prototyping .
 
-CLI: Command Line Interface
-• Create a Hello World program, construct a simple interactive application, and build the program via the terminal.
-• List common Linux terminal commands and choose the correct commands to work with a file system via the command line.
-• Describe how a computer generates a program from code.
-• Write and use a Makefile.
-• Discuss the advantages of using Makefiles.
+Create a Hello World program, construct a simple interactive application, and build the program via the terminal.
 
-DE: Design Elements
-• Explain how C++ generates random numbers and write a program that generates random numbers.
-• Identify C++ control structures and conclude which branch a sample program will execute.
-• Identify C++ repetition structures and explain the following terms: looping parameter, stopping condition, and looping parameter modification.
-• Explain the appropriate use and differences between a while loop, for loop, and a do-while loop.
-• Discuss the design process and strategies for developing good code.
-• Identify and correct errors in program structure and logic.
-• Implement various techniques to trace & debug a program.
-• Discuss the pros/cons of the various debugging techniques.
-• Identify the parts of a function.
-• Explain the difference between a parameter and an argument for a function. Discuss what can be returned from a function and what a void function is.
-• Explain the meaning of the DRY principle and appropriate uses for functions.
-• SOLID: Discuss how functions contribute towards the Principle of Single Responsibility.
-• Create functions in separate header and implementation files.
-• Define and implement a procedural programming style.
-• Explain the difference between a function prototype and a function implementation. Discuss the pros/cons of separate implementations.
-• Implement various techniques to trace & debug a program.
-• Define an overloaded function and recite common usages for overloaded functions.
+```
+#include <iostream>
+#include <string>
+using namespace std;
 
-MM: Memory Management
-• List C++ primitive data types and explain the appropriate use of each data type.
-• Explain how values are stored in memory, how the values are interpreted differently based on data type, and list common errors that can occur with data types.
-• Diagram how integer and decimal values are represented in binary.
-• Convert between binary and decimal formats.
-• Explain the concept of local & global scope when functions are used within a program.
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}
+```
+**Compile & run:** `g++ hello.cpp -o hello && ./hello` .
+
+**Simple interactive app:**
+```
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name;
+    cout << "Enter your name: ";
+    getline(cin, name);
+    cout << "Hello, " << name << "!" << endl;
+    return 0;
+}
+```
+
+List C++ primitive data types and explain the appropriate use of each data type.
+
+| Type | Size | Range | Use Case |
+|------|------|-------|----------|
+| `bool` | 1 byte | true/false | Conditions, flags  |
+| `char` | 1 byte | -128 to 127 | Single characters  |
+| `int` | 4 bytes | -2B to 2B | Whole numbers  |
+| `float` | 4 bytes | ~6 decimals | Single precision floats  |
+| `double` | 8 bytes | ~15 decimals | High precision floats  |
+
+List & identify C++ arithmetic operators, translate math equations to C++, and solve arithmetic expressions.
+
+**Operators:** `+ - * / % ++ --` (arithmetic), `+= -= *= /= %= ++ --=` (compound) .
+
+**Equation translation:** `y = (3x² + 5)/2` → `double y = (3 * x * x + 5) / 2.0;` .
+
+Discuss the effects of a statically typed language.
+
+- Compile-time type checking catches errors early .  
+- Better performance (no runtime type checks) .  
+- Self-documenting code with explicit types .
+
+Convert one data type to another.
+
+**Explicit casting:** `int i = 5; double d = static_cast<double>(i);` .  
+**Implicit:** `int i = 5; double d = i;` .
+static_cast is usually a relativly safe cast. E.g. converting an integer type to a floating-point type or another integer type.
+
+const_cast can be used to ignore the the const qualifiers on pointers and references. Well written code that use const properly should have to use this type of cast very rarely or not at all.
+
+reinterpret_cast does more dangerous casts. Be careful and make sure that you know what you're doing when using this cast. Can convert integers to pointers, or pointers to other type of pointers (static_cast can also do certain pointer casts but is more restricted).
+
+dynamic_cast safely converts pointers and references from a superclass to a subclass.
+
+A C-style cast is essentially a combination of static_cast, const_cast and reinterpret_cast.
+
+
+Recite the order of operations and evaluate an expression.
+
+**Order (PEMDAS):** Parentheses → Exponents → Multiplication/Division → Addition/Subtraction .  
+**Evaluate:** `5 + 3 * 2` = 11 (multiply first) .
+
+Explain how C++ generates random numbers and write a program that generates random numbers.
+
+```cpp
+#include <iostream>
+#include <random>
+using namespace std;
+
+int main() {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 100);
+    for(int i = 0; i < 5; i++) {
+        cout << dis(gen) << " ";
+    }
+    return 0;
+}
+```
+**`<random>` library provides cryptographically secure randomness** .
+
+Identify C++ control structures and conclude which branch a sample program will execute.
+
+**Control structures:** `if`, `if-else`, `switch`, `?:` (ternary) .
+
+**Sample:**
+```cpp
+int x = 10;
+if(x > 5) cout << "A"; else cout << "B";
+```
+**Executes "A"** .
+
+List C++ logic operators and evaluate Boolean expressions consisting of multiple logic operators.
+
+**Operators:** `&&` (AND), `||` (OR), `!` (NOT) .  
+**Evaluate:** `(true && false) || true` = true .
+
+Convert a program written with a for loop to a program using a while loop and vice versa.
+
+**for → while:**
+```cpp
+// for
+for(int i = 0; i < 5; i++) cout << i;
+// while
+int i = 0;
+while(i < 5) { cout << i++; }
+```
+
+**while → for:**
+```cpp
+// while
+int i = 0;
+while(i < 5) cout << i++;
+// for
+for(int i = 0; i < 5; i++) cout << i;
+```
+
+Identify and correct errors in program structure and logic.
+
+**Common errors:**
+```cpp
+// WRONG
+if(x = 5) {}  // assignment, not comparison
+// CORRECT
+if(x == 5) {}
+```
+
+**CLI: Command Line Interface**
+
+Create a Hello World program, construct a simple interactive application, and build the program via the terminal.
+
+**See C++ Programming section above** .
+
+List common Linux terminal commands and choose the correct commands to work with a file system via the command line.
+
+| Action | Command |
+|--------|---------|
+| List files | `ls -la` |
+| Change directory | `cd /path` |
+| Create directory | `mkdir folder` |
+| Create file | `touch file.txt` |
+| Remove file | `rm file.txt` |
+| Remove directory | `rm -r folder` |
+| Copy | `cp source dest` |
+| Move | `mv source dest`  |
+
+Describe how a computer generates a program from code.
+
+1. **Preprocessing:** Expand macros, include headers .  
+2. **Compilation:** Source → assembly .  
+3. **Assembly:** Assembly → object files .  
+4. **Linking:** Object files → executable .
+
+Write and use a Makefile.
+
+```
+# Makefile
+program: main.o
+	g++ main.o -o program
+
+main.o: main.cpp
+	g++ -c main.cpp
+
+clean:
+	rm *.o program
+```
+**Usage:** `make`, `make clean` .
+
+Discuss the advantages of using Makefiles.
+
+- Automates complex build processes .  
+- Incremental builds (only recompile changed files) .  
+- Handles dependencies automatically .
+
+**DE: Design Elements**
+
+**Random numbers & control structures** – **See C++ Programming section above** .
+
+Identify C++ repetition structures and explain the following terms: looping parameter, stopping condition, and looping parameter modification.
+
+**Structures:** `for`, `while`, `do-while` .
+
+- **Looping parameter:** `i` in `for(int i=0;...)`   
+- **Stopping condition:** `i < 10`   
+- **Modification:** `i++` 
+
+Explain the appropriate use and differences between a while loop, for loop, and a do-while loop.
+
+| Loop | Use Case | Executes at least once? |
+|------|----------|------------------------|
+| `for` | Known iteration count | No |
+| `while` | Unknown iterations, check first | No |
+| `do-while` | Must execute once | Yes  |
+
+Discuss the design process and strategies for developing good code.
+
+1. **Requirements analysis** → 2. **Design** → 3. **Implementation** → 4. **Testing** → 5. **Maintenance** .  
+**Strategies:** Modular design, clear naming, comments .
+
+Identify and correct errors in program structure and logic.
+
+**See C++ Programming section above**.
+
+Implement various techniques to trace & debug a program.
+
+- **Print statements** (simple)   
+- **Debugger** (`gdb program`, `break main`, `run`, `next`)   
+- **IDE debugger** (breakpoints, watch variables) 
+
+Discuss the pros/cons of the various debugging techniques.
+
+| Technique | Pros | Cons |
+|-----------|------|------|
+| Print statements | Easy, no tools | Clutters code, slow |
+| Debugger | Interactive, powerful | Learning curve, slow |
+| IDE debugger | Visual, convenient | IDE dependency  |
+
+Identify the parts of a function.
+
+```cpp
+return_type function_name(parameter_type param) {  // prototype/declaration
+    // body
+    return value;  // or nothing for void
+}
+```
+
+Explain the difference between a parameter and an argument for a function. Discuss what can be returned from a function and what a void function is.
+
+- **Parameter:** Variable in function definition   
+- **Argument:** Actual value passed when calling   
+- **Return:** Any type (int, double, string, etc.)   
+- **Void:** Returns nothing (`void func()`) 
+
+Explain the meaning of the DRY principle and appropriate uses for functions.
+
+**DRY = Don't Repeat Yourself** – functions eliminate code duplication .  
+**Use when:** Same logic repeats multiple times .
+
+SOLID: Discuss how functions contribute towards the Principle of Single Responsibility.
+
+**Single Responsibility Principle:** One function, one job .  
+```cpp
+// BAD - does too much
+void processUser() { read(); validate(); save(); }
+
+// GOOD
+void readUser() { ... }
+void validateUser() { ... }
+void saveUser() { ... }
+```
+
+Create functions in separate header and implementation files.
+
+**math.h:**
+```cpp
+#ifndef MATH_H
+#define MATH_H
+int add(int a, int b);
+#endif
+```
+
+**math.cpp:**
+```cpp
+#include "math.h"
+int add(int a, int b) { return a + b; }
+```
+
+**main.cpp:** `#include "math.h"` .
+
+Define and implement a procedural programming style.
+
+**Procedural:** Functions + main program flow (no objects) .
+
+Explain the difference between a function prototype and a function implementation. Discuss the pros/cons of separate implementations.
+
+- **Prototype:** Declaration only (`int add(int, int);`)   
+- **Implementation:** Full definition with body   
+**Separate files:** Reusability, faster compilation .
+
+Define an overloaded function and recite common usages for overloaded functions.
+
+**Overloaded:** Same name, different parameters .
+```cpp
+int add(int a, int b);
+double add(double a, double b);
+string add(string a, string b);
+```
+
+**MM: Memory Management**
+
+**Primitive data types** – **See C++ Programming section above** .
+
+Explain how values are stored in memory, how the values are interpreted differently based on data type, and list common errors that can occur with data types.
+
+**Storage:** Fixed-size bytes in RAM, interpreted by type .  
+**Errors:**  
+- Buffer overflow (array bounds)   
+- Type mismatch (int vs float)   
+- Uninitialized variables 
+
+Diagram how integer and decimal values are represented in binary.
+
+**Integer (5):** `00000101` (8-bit)   
+**Decimal (5.5):** IEEE 754 → Sign(0) + Exponent(10000010) + Mantissa(01000000000000000000000) 
+
+Convert between binary and decimal formats.
+
+**Binary → Decimal:** `1011` = 1×8 + 0×4 + 1×2 + 1×1 = 11   
+**Decimal → Binary:** 13 ÷ 2 = 6 r1, 6 ÷ 2 = 3 r0, 3 ÷ 2 = 1 r1, 1 ÷ 2 = 0 r1 → `1101` 
+
+Explain the concept of local & global scope when functions are used within a program.
+
+```cpp
+int global = 10;  // accessible everywhere
+
+void func() {
+    int local = 5;  // only inside func
+    cout << global << local;  // OK
+}
+
+int main() {
+    cout << global;  // OK
+    // cout << local;  // ERROR - not in scope
+}
+```
+**Local:** Function scope. **Global:** Program scope .
+
+HEADER FILES FOR NOOBS
+
+```
+============================================================
+C++ HEADER FILES FOR NOOBS - BEGINNER GUIDE
+============================================================
+
+WHAT ARE HEADER FILES?
+======================
+- .h or .hpp files that contain FUNCTION DECLARATIONS
+- Like a "menu" - tells compiler WHAT functions exist
+- Actual code (.cpp files) is the "kitchen"
+
+WHY USE THEM?
+=============
+- Share functions across multiple .cpp files
+- Faster compilation (compiler sees declarations once)
+- Cleaner, organized code
+
+BASIC STRUCTURE
+===============
+math.h (HEADER FILE - DECLARATIONS ONLY)
+```
+#ifndef MATH_H          // Prevents double inclusion
+#define MATH_H
+
+int add(int a, int b);  // PROTOTYPE (declaration)
+double multiply(double x, double y);
+void printHello();      // void = returns nothing
+
+#endif                  // End include guard
+```
+
+math.cpp (IMPLEMENTATION - ACTUAL CODE)
+```
+#include "math.h"       // Include our header
+
+int add(int a, int b) {     // FULL DEFINITION
+    return a + b;
+}
+
+double multiply(double x, double y) {
+    return x * y;
+}
+
+void printHello() {
+    std::cout << "Hello!" << std::endl;
+}
+```
+
+main.cpp (USES THE FUNCTIONS)
+```
+#include "math.h"       // Get the prototypes
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << add(3, 4) << endl;           // 7
+    cout << multiply(2.5, 3.0) << endl;  // 7.5
+    printHello();
+    return 0;
+}
+```
+
+HOW TO COMPILE MULTI-FILE PROJECT
+=================================
+```
+g++ main.cpp math.cpp -o myprogram
+./myprogram
+```
+
+REAL-WORLD EXAMPLE: Calculator
+===============================
+**calculator.h**
+```
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
+
+double add(double a, double b);
+double subtract(double a, double b);
+double multiply(double a, double b);
+double divide(double a, double b);
+
+#endif
+```
+
+**calculator.cpp**
+```
+#include "calculator.h"
+
+double add(double a, double b) { return a + b; }
+double subtract(double a, double b) { return a - b; }
+double multiply(double a, double b) { return a * b; }
+double divide(double a, double b) { 
+    if(b != 0) return a / b; 
+    return 0; 
+}
+```
+
+COMMON HEADER FILES (STANDARD LIBRARY)
+======================================
+```
+#include <iostream>     // cout, cin, endl
+#include <string>       // std::string
+#include <vector>       // dynamic arrays
+#include <fstream>      // file I/O
+#include <cmath>        // sqrt(), pow(), sin()
+#include <random>       // random numbers
+```
+
+PROTIPS FOR NOOBS
+=================
+1. ALWAYS use #ifndef/#define/#endif (include guards)
+2. Header files = DECLARATIONS ONLY (no function bodies!)
+3. Use quotes "" for YOUR headers, brackets <> for standard ones
+4. Put related functions in same header file
+5. Name headers same as .cpp files (math.h + math.cpp)
+
+MOST COMMON MISTAKES
+====================
+❌ NO include guard → infinite loops
+❌ Function body in header → multiple definition errors  
+❌ Forgetting #include "myheader.h" → undefined reference
+❌ #include <myheader.h> → can't find file (use "")
+
+QUICK TEMPLATE
+==============
+```
+#ifndef FILENAME_H
+#define FILENAME_H
+
+// Function prototypes here
+returnType functionName(type param1, type param2);
+
+#endif
+```
+
+EXAMPLE PROJECT FOLDER
+======================
+```
+myproject/
+├── main.cpp
+├── math.h      ← Menu
+├── math.cpp    ← Kitchen
+└── Makefile
+```
+
+Makefile bonus:
+```
+all: program
+
+program: main.o math.o
+	g++ main.o math.o -o program
+
+main.o: main.cpp math.h
+	g++ -c main.cpp
+
+math.o: math.cpp math.h
+	g++ -c math.cpp
+
+clean:
+	rm *.o program
+```
+
+BOOM! You're now a header file pro!
+====================================
