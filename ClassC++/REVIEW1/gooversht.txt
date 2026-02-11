@@ -117,24 +117,52 @@ List C++ logic operators and evaluate Boolean expressions consisting of multiple
 
 Convert a program written with a for loop to a program using a while loop and vice versa.
 
-**for → while:**
-```cpp
+**for → while
+
+cpp
 // for
 for(int i = 0; i < 5; i++) cout << i;
-// while
-int i = 0;
-while(i < 5) { cout << i++; }
-```
 
-**while → for:**
-```cpp
-// while
+// while (correct)
 int i = 0;
-while(i < 5) cout << i++;
+while(i < 5) { 
+    cout << i++; 
+}
+
+**while → for
+
+cpp
+// while (with braces for safety)
+int i = 0;
+while(i < 5) { 
+    cout << i++; 
+}
+
 // for
 for(int i = 0; i < 5; i++) cout << i;
-```
 
+**while → do-while
+
+cpp
+// while
+int i = 0;
+while(i < 5) { 
+    cout << i++; 
+}
+
+// do-while (equivalent)
+int i = 0;
+do { 
+    cout << i;
+    i++; 
+} while (i < 5);
+Note: All print before incrementing, matching the original
+
+do {
+    // Loop body: statements to execute
+    // Update expression (e.g., i++)
+} while (condition);  // Semicolon is required after while(condition)
+so then 
 Identify and correct errors in program structure and logic.
 
 **Common errors:**
