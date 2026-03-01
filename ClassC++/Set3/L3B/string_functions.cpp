@@ -10,7 +10,7 @@ size_t string_length(const string STR) {
 }
 
 char string_char_at(const string STR, const size_t IDX) {
-    char result = '\0';
+    char result = '\\0';
     result = STR.at(IDX);
     return result;
 }
