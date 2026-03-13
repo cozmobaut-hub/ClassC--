@@ -37,7 +37,6 @@ string string_substring(const string STR, const size_t IDX, const size_t LEN) {
     string result = STR.substr(IDX, LEN);
     return result;
 }
-// replacement and first-word operations
 
 string string_replace(const string STR, const string TEXT_TO_REPLACE, const string REPLACE_WITH) {
     string result = STR;
