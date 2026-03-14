@@ -43,13 +43,13 @@ endif
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	TAB_HERE$(CXX) -o $@ $^
+	$(CXX) -o $@ $^
 
 .cpp.o:
-	TAB_HERE$(CXX) $(CPPVERSION) $(CXXFLAGS_DEBUG) $(CXXFLAGS_WARN) -o $@ -c $<
+	$(CXX) $(CPPVERSION) $(CXXFLAGS_DEBUG) $(CXXFLAGS_WARN) -o $@ -c $<
 
 clean:
-	TAB_HERE$(DEL) $(TARGET) $(OBJECTS)
+	$(DEL) $(TARGET) $(OBJECTS)
 
 depend:
 	@sed -i.bak '/^# DEPENDENCIES/,$$d' Makefile

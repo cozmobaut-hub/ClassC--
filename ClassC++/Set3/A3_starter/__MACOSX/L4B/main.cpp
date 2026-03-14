@@ -1,5 +1,5 @@
-#include "Warehouse.h"
-
+#include "Warehouse.hpp"
+#include "Box.hpp"
 #include <iostream>
 #include <string>
 using namespace std;

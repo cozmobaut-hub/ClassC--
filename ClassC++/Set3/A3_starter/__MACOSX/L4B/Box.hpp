@@ -4,69 +4,70 @@
 #include <ostream>
 
 /**
- * @brief Stores the size/value of a Box
+ * @brief Stores the size of a Box
+ * 
  */
-template<typename T>
 class Box {
 public:
     /**
      * @brief Construct a new Box object
-     * default-initialized value
+     * of unit dimensions
+     * 
      */
     Box(); // default constructor
-
+    
     /**
      * @brief Construct a new Box object
-     * for given value
-     *
-     * @param VALUE value of the Box
+     * for given dimension.  If dimension
+     * is not positive, defaults dimension to 1
+     * 
+     * @param SIZE size of the Box
      */
-    Box(const T& VALUE); // parameterized constructor
+    Box(const double SIZE); // parameterized constructor
 
     /**
-     * @brief Get the value stored in the Box
-     *
-     * @return T current Box value
+     * @brief Get the Size of the Box
+     * 
+     * @return double current Box size
      */
-    T getBoxSize() const; // accessor - getter
+    double getBoxSize() const; // accessor - getter
 
     /**
-     * @brief Set the value in the Box
-     *
-     * @param VALUE value to set on Box
+     * @brief Set the Size only
+     * if positive
+     * 
+     * @param SIZE size to set on Box
      */
-    void setBoxSize(const T& VALUE); // mutator - setter
+    void setBoxSize(const double SIZE); // mutator - setter
 
 private:
     /**
-     * @brief current Box value
+     * @brief current Box size
+     * 
      */
-    T _size;
+    double _size;
 };
 
-template<typename T>
-Box<T>::Box() {
-    // default-initialized T
-    _size = T();
+std::ostream& operator<<(std::ostream& os, const Box& BOX);
+
+inline Box::Box() {
+    _size = 1.0;
 }
 
-template<typename T>
-Box<T>::Box(const T& VALUE) {
-    _size = VALUE;
+inline Box::Box(const double SIZE) {
+    if (SIZE > 0) _size = SIZE;
+    else _size = 1.0;
 }
 
-template<typename T>
-T Box<T>::getBoxSize() const {
+inline double Box::getBoxSize() const {
     return _size;
 }
 
-template<typename T>
-void Box<T>::setBoxSize(const T& VALUE) {
-    _size = VALUE;
+inline void Box::setBoxSize(const double SIZE) {
+    if (SIZE > 0) _size = SIZE;
 }
 
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const Box<T>& BOX) {
+inline std::ostream& operator<<(std::ostream& os, const Box& BOX) {
     os << BOX.getBoxSize();
     return os;
 }

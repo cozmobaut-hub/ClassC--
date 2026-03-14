@@ -2,11 +2,11 @@
 #define WAREHOUSE_HPP
 
 #include "Box.hpp"
-#include <ostream>
 #include <vector>
+#include <ostream>
 
 /**
- * @brief takes in things and puts them into a list. stores all the items internally
+ * @brief takes in things and puts them into a list.  stores all the items internally
  */
 template<typename T>
 class Warehouse {
@@ -40,13 +40,13 @@ public:
     /**
      * @brief Get the item at given position within the warehouse
      * @param ITEM_POS position to retrieve
-     * @return Box<T>& corresponding item
+     * @return T& corresponding item
      */
-    Box<T>& retrieve(const size_t ITEM_POS) const;
+    T& retrieve(const size_t ITEM_POS) const;
 
     /**
      * @brief Get the Number Of items
-     * @return size_t
+     * @return size_t 
      */
     size_t getNumberOfItems() const;
 
@@ -64,9 +64,9 @@ public:
 
 private:
     /**
-     * @brief holds a list of pointers to Boxes
+     * @brief holds a list of items
      */
-    std::vector< Box<T>* >* _pItems;
+    std::vector<T>* _pItems;
 
     /**
      * @brief Warehouse letter identifier
@@ -76,26 +76,22 @@ private:
 
 template<typename T>
 Warehouse<T>::Warehouse() {
-    _pItems = new std::vector< Box<T>* >;
+    _pItems = new std::vector<T>;
 }
 
 template<typename T>
 Warehouse<T>::~Warehouse() {
-    while (!_pItems->empty()) {
-        delete _pItems->back();
-        _pItems->pop_back();
-    }
     delete _pItems;
 }
 
 template<typename T>
 void Warehouse<T>::store(const T& ITEM) {
-    _pItems->push_back(new Box<T>(ITEM));
+    _pItems->push_back(ITEM);
 }
 
 template<typename T>
-Box<T>& Warehouse<T>::retrieve(const size_t ITEM_POS) const {
-    return *(_pItems->at(ITEM_POS));
+T& Warehouse<T>::retrieve(const size_t ITEM_POS) const {
+    return _pItems->at(ITEM_POS);
 }
 
 template<typename T>
@@ -109,7 +105,7 @@ char Warehouse<T>::getWarehouseLetter() const {
 }
 
 template<typename T>
-void Warehouse<T>::setWarehouseLetter(const char warehouseLetter) {
+void Warehouse<T>::setWarehouseLetter(char warehouseLetter) {
     _warehouseLetter = warehouseLetter;
 }
 
@@ -118,9 +114,9 @@ std::ostream& operator<<(std::ostream& os, const Warehouse<T>& WH) {
     const size_t NUM_ITEMS = WH.getNumberOfItems();
     os << "Warehouse " << WH.getWarehouseLetter()
        << " has " << NUM_ITEMS << " items (";
-    for (size_t i = 0; i < NUM_ITEMS; i++) {
+    for (size_t i = 0; i < NUM_ITEMS; ++i) {
         os << WH.retrieve(i);
-        if (i < NUM_ITEMS - 1) {
+        if (i + 1 < NUM_ITEMS) {
             os << ", ";
         }
     }
