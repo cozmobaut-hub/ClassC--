@@ -14,7 +14,7 @@ USERNAME = austin_haas
 # NO EDITS BELOW THIS LINE
 CXX = g++
 CXXFLAGS_DEBUG = -g -O0
-CXXFLAGS_WARN = -Wall -Wextra -Wconversion -Wdouble-promotion -Wunreachable-code -Wshadow -Wpedantic
+CXXFLAGS_WARN = -Wall -Wextra -Wconversion -Wdouble-promotion -Wunreachable-code -Wshadow -Wpedantic -lsfml-graphics -lsfml-window -lsfml-system
 CPPVERSION = -std=c++17
 
 OBJECTS = $(SRC_FILES:.cpp=.o)

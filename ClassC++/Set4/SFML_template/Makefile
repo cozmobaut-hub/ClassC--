@@ -3,11 +3,11 @@
 # THE NAME OF YOUR PROJECT
 PROJECT = L4C
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp
 # ALL HEADER FILES THAT ARE PART OF THE PROJECT
-H_FILES = 
+H_FILES =
 # ANY OTHER RESOURCES FILES THAT ARE PART OF THE PROJECT
-REZ_FILES = 
+REZ_FILES =
 # YOUR USERNAME
 USERNAME = austin_haas
 
@@ -27,11 +27,26 @@ ifeq ($(shell echo "Windows"), "Windows")
 	ZIPPER = tar -a -c -f
 	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
 	Q =
+	INC_PATH = C:/mingw64/include/
+	LIB_PATH = C:/mingw64/lib/
+	RPATH =
 else
 	TARGET = $(PROJECT)
 	DEL = rm -f
 	ZIPPER = tar -acf
 	Q= "
+	INC_PATH = /usr/local/include/
+	LIB_PATH = /usr/local/lib/
+
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		CXXFLAGS += -D LINUX
+		RPATH =
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		CXXFLAGS += -D OSX
+		RPATH = -Wl,-rpath,/Library/Frameworks -Wl,-rpath,$(LIB_PATH)
+	endif
 
 	ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
 		ARCHIVE_EXTENSION = tar.gz
@@ -40,13 +55,15 @@ else
 	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
 endif
 
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
+
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) -o $@ $^
+	$(CXX) -o $@ $^ $(RPATH) -L$(LIB_PATH) $(LIBS)
 
 .cpp.o:
-	$(CXX) $(CPPVERSION) $(CXXFLAGS_DEBUG) $(CXXFLAGS_WARN) -o $@ -c $<
+	$(CXX) $(CPPVERSION) $(CXXFLAGS_DEBUG) $(CXXFLAGS_WARN) -o $@ -c $< -I$(INC_PATH)
 
 clean:
 	$(DEL) $(TARGET) $(OBJECTS)
@@ -62,7 +79,7 @@ submission:
 	@echo "...Zipping source files:   $(SRC_FILES) ..."
 	@echo "...Zipping header files:   $(H_FILES) ..."
 	@echo "...Zipping resource files: $(REZ_FILES)..."
-	@echo "...Zipping Makefile ..."
+	@echo "...Zipping Makefile..."
 	$(ZIPPER) $(ZIP_NAME) $(SRC_FILES) $(H_FILES) $(REZ_FILES) Makefile
 	@echo "...$(ZIP_NAME) done!"
 

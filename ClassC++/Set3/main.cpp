@@ -23,6 +23,25 @@ int main() {
     // Test more registrations
     cout << "After 3 more registrations: " << titledCourse.registerStudent() << endl;
     cout << "Current enrollment: " << titledCourse.getEnrollment() << endl;
-    
+
+    Course copyCourse(titledCourse); // Test copy constructor
+    copyCourse.printInfo(); // Should match titledCourse info
+
+    Course assignedCourse; // Test assignment operator
+    assignedCourse = titledCourse;
+    assignedCourse.printInfo(); // Should match titledCourse info
+
+    {
+        Course tempCourse("Temporary Course");
+        tempCourse.registerStudent();
+        tempCourse.printInfo();
+    } // tempCourse goes out of scope here, destructor should be called         
+
+    Course randomcourse("Circuits");
+    string x;
+    x = randomcourse.fuckingcircuits(); // Test the fuckingcircuits method
+    cout << x << endl;
+
+
     return 0;
 }

@@ -33,6 +33,14 @@ int Course::withdrawStudent() {
     return _enrollment;
 }
 
+string Course::fuckingcircuits() {
+    if (_title == "Circuits") {
+        _title = "Fucking Circuits";
+        cout << "Fuck circuits" << endl;
+    }
+    return "Not the circuits course"; // Placeholder implementation
+}
+
 void Course::printInfo() {
     cout << "Enrollment: " << _enrollment
          << " Title: " << _title << endl;
