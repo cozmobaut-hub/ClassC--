@@ -1,15 +1,15 @@
 # COMMENTS BEGIN WITH A HASH
 
 # THE NAME OF YOUR PROJECT
-PROJECT = Lecture05
+PROJECT = AXC
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp
 # ALL HEADER FILES THAT ARE PART OF THE PROJECT
-H_FILES = 
-# ANY OTHER RESOURCES FILES THAT ARE PART OF THE PROJECT
-REZ_FILES = 
+H_FILES =
+# ANY OTHER RESOURCE FILES THAT ARE PART OF THE PROJECT
+REZ_FILES =
 # YOUR USERNAME
-USERNAME = username
+USERNAME = austin_haas
 
 # NO EDITS BELOW THIS LINE
 CXX = g++
@@ -21,23 +21,23 @@ OBJECTS = $(SRC_FILES:.cpp=.o)
 
 ARCHIVE_EXTENSION = zip
 
-ifeq ($(shell echo "Windows"), "Windows")
-	TARGET = $(PROJECT).exe
-	DEL = del
-	ZIPPER = tar -a -c -f
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
-	Q =
+ifeq ($(OS),Windows_NT)
+TARGET = $(PROJECT).exe
+DEL = del /Q
+ZIPPER = tar -a -c -f
+ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+Q =
 else
-	TARGET = $(PROJECT)
-	DEL = rm -f
-	ZIPPER = tar -acf
-	Q= "
+TARGET = $(PROJECT)
+DEL = rm -f
+ZIPPER = tar -acf
+Q = "
 
-	ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
-		ARCHIVE_EXTENSION = tar.gz
-	endif
+ifeq ($(shell tar --version 2>/dev/null | grep -o "GNU tar"),GNU tar)
+ARCHIVE_EXTENSION = tar.gz
+endif
 
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
 endif
 
 all: $(TARGET)
@@ -61,7 +61,7 @@ submission:
 	@echo "Creating submission file $(ZIP_NAME) ..."
 	@echo "...Zipping source files:   $(SRC_FILES) ..."
 	@echo "...Zipping header files:   $(H_FILES) ..."
-	@echo "...Zipping resource files: $(REZ_FILES)..."
+	@echo "...Zipping resource files: $(REZ_FILES) ..."
 	@echo "...Zipping Makefile ..."
 	$(ZIPPER) $(ZIP_NAME) $(SRC_FILES) $(H_FILES) $(REZ_FILES) Makefile
 	@echo "...$(ZIP_NAME) done!"
@@ -69,4 +69,4 @@ submission:
 .PHONY: all clean depend submission
 
 # DEPENDENCIES
-main.o: main.cpp 
+main.o: main.cpp
