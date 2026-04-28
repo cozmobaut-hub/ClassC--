@@ -1,11 +1,11 @@
 # COMMENTS BEGIN WITH A HASH
 
 # THE NAME OF YOUR PROJECT
-PROJECT = L6A
+PROJECT = L6B
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp test_suite.cpp
+SRC_FILES = main.cpp
 # ALL HEADER FILES THAT ARE PART OF THE PROJECT
-H_FILES = test_suite.h List.hpp Array.hpp LinkedList.hpp
+H_FILES = List.hpp Array.hpp LinkedList.hpp
 # ANY OTHER RESOURCES FILES THAT ARE PART OF THE PROJECT
 REZ_FILES = README.txt LICENSE
 # YOUR USERNAME
@@ -22,22 +22,22 @@ OBJECTS = $(SRC_FILES:.cpp=.o)
 ARCHIVE_EXTENSION = zip
 
 ifeq ($(shell echo "Windows"), "Windows")
-	TARGET = $(PROJECT).exe
-	DEL = del
-	ZIPPER = tar -a -c -f
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
-	Q =
+    TARGET = $(PROJECT).exe
+    DEL = del
+    ZIPPER = tar -a -c -f
+    ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+    Q =
 else
-	TARGET = $(PROJECT)
-	DEL = rm -f
-	ZIPPER = tar -acf
-	Q= "
+    TARGET = $(PROJECT)
+    DEL = rm -f
+    ZIPPER = tar -acf
+    Q= "
 
-	ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
-		ARCHIVE_EXTENSION = tar.gz
-	endif
+    ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
+        ARCHIVE_EXTENSION = tar.gz
+    endif
 
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+    ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
 endif
 
 all: $(TARGET)
@@ -69,6 +69,4 @@ submission:
 .PHONY: all clean depend submission
 
 # DEPENDENCIES
-main.o: main.cpp test_suite.h List.hpp Array.hpp LinkedList.hpp
-test_suite.o: test_suite.cpp test_suite.h List.hpp Array.hpp \
-  LinkedList.hpp
+main.o: main.cpp List.hpp Array.hpp LinkedList.hpp
