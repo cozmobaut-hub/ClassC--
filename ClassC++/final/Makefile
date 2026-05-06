@@ -1,13 +1,13 @@
 # COMMENTS BEGIN WITH A HASH
 
 # THE NAME OF YOUR PROJECT
-PROJECT = L5A
+PROJECT = FinalProject
 # ALL CPP COMPILABLE IMPLEMENTATION FILES THAT MAKE UP THE PROJECT
-SRC_FILES = main.cpp Room.cpp GuessTheNumberRoom.cpp ExitRoom.cpp
+SRC_FILES = main.cpp ConnectFourGame.cpp
 # ALL HEADER FILES THAT ARE PART OF THE PROJECT
-H_FILES = Room.h GuessTheNumberRoom.h ExitRoom.h
+H_FILES = ConnectFourGame.h
 # ANY OTHER RESOURCES FILES THAT ARE PART OF THE PROJECT
-REZ_FILES = 
+REZ_FILES = final.txt
 # YOUR USERNAME
 USERNAME = austin_haas
 
@@ -22,22 +22,22 @@ OBJECTS = $(SRC_FILES:.cpp=.o)
 ARCHIVE_EXTENSION = zip
 
 ifeq ($(shell echo "Windows"), "Windows")
-	TARGET = $(PROJECT).exe
-	DEL = del
-	ZIPPER = tar -a -c -f
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
-	Q =
+    TARGET = $(PROJECT).exe
+    DEL = del
+    ZIPPER = tar -a -c -f
+    ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+    Q =
 else
-	TARGET = $(PROJECT)
-	DEL = rm -f
-	ZIPPER = tar -acf
-	Q= "
+    TARGET = $(PROJECT)
+    DEL = rm -f
+    ZIPPER = tar -acf
+    Q = "
 
-	ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
-		ARCHIVE_EXTENSION = tar.gz
-	endif
+    ifeq ($(shell tar --version | grep -o "GNU tar"), GNU tar)
+        ARCHIVE_EXTENSION = tar.gz
+    endif
 
-	ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
+    ZIP_NAME = $(PROJECT)_$(USERNAME).$(ARCHIVE_EXTENSION)
 endif
 
 all: $(TARGET)
@@ -49,7 +49,7 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CPPVERSION) $(CXXFLAGS_DEBUG) $(CXXFLAGS_WARN) -o $@ -c $<
 
 clean:
-	$(DEL) $(TARGET) $(OBJECTS)
+	$(DEL) $(TARGET) $(OBJECTS) Makefile.bak
 
 depend:
 	@sed -i.bak '/^# DEPENDENCIES/,$$d' Makefile
@@ -69,7 +69,5 @@ submission:
 .PHONY: all clean depend submission
 
 # DEPENDENCIES
-main.o: main.cpp GuessTheNumberRoom.h Room.h ExitRoom.h
-Room.o: Room.cpp Room.h
-GuessTheNumberRoom.o: GuessTheNumberRoom.cpp GuessTheNumberRoom.h Room.h
-ExitRoom.o: ExitRoom.cpp ExitRoom.h Room.h
+main.o: main.cpp ConnectFourGame.h
+ConnectFourGame.o: ConnectFourGame.cpp ConnectFourGame.h

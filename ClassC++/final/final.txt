@@ -1,0 +1,94 @@
+
+
+Austin H
+CSCI 200 – Section D
+Connect 4 but it’s in the console
+
+PROBLEM DESCRIPTION:
+I created a two-player console implementation of the classic Connect 4 game. 
+Players take turns dropping pieces into a 6x7 grid, with each move fmakealling to the lowest available cell in the chosen column. 
+The program automatically detects when a player has four pieces in a row horizontally, vertically, or diagonally, and it also detects when the board is full and the game is a tie. 
+In addition, the program supports saving the current game state to a file and loading a saved game, as well as tracking simple win statistics for each player across multiple games using a separate stats file.
+
+PROGRAM DOCUMENTATION:
+The program is built as a standard C++17 console application using only the C++ standard library (no third‑party libraries). 
+To compile on the department machines, you can use the provided Makefile (similar to the course style example) and run make to build the executable. 
+Once compiled, run the program from the command line in the directory containing main.cpp, ConnectFourGame.h, and ConnectFourGame.cpp. The program will automatically look for the files connect4_save.txt and connect4_stats.txt in the same directory; if they do not exist, the game starts with a fresh board and zeroed statistics.
+
+When the program starts, it attempts to load cumulative stats from connect4_stats.txt, then displays a main menu with four options: 
+(1) start a new game, 
+(2) load a saved game, 
+(3) show stats, and 
+(4) quit. 
+
+Starting a new game clears the board and begins with player ‘X’. 
+On each turn, the board is printed and the current player is prompted to choose a column (0–6) to drop a piece into, or enter -1 to save and return to the main menu. 
+The program validates input, checks whether the chosen column is full, and then drops the piece to the lowest available row in that column. 
+After each move, the program checks for a win from the last move’s position in all four directions and checks for a tie when the board is full.
+
+If a player wins or the game ends in a tie, the board is displayed, the result is announced, and the win statistics are updated and saved to connect4_stats.txt. 
+The “Load saved game” option restores a previously saved board state, current player, move count, and win statistics from connect4_save.txt and then resumes the same in‑game loop. 
+The “Show stats” option prints the current total wins for player X and player O. If I had more time, I would consider adding features like choosing who starts first, allowing custom board sizes, a computerized opponent, or undo functionality. 
+These features would mostly involve extending the ConnectFourGame class and changes in the main menu workflow.
+
+CLASS DESCRIPTION:
+My custom class is ConnectFourGame. 
+It encapsulates all of the core game data: 
+the number of rows and columns, 
+a 2D vector std::vector< std::vector<char> > to represent the 6x7 board (storing ' ', 'X', or 'O'), 
+the current player ('X' or 'O'), the number of moves played in the current game, 
+and cumulative win counts for player X and player O. 
+
+By keeping these members private, the class controls all direct manipulation of game state and ensures the rest of the program interacts with the game only through a clear public interface.
+
+The class also encapsulates functionality beyond simple getters and setters. 
+It provides resetBoard to clear the board and reset the move counter, printBoard to render the grid to the console, isColumnFull to check whether a column can accept another piece, and dropPiece to perform the “gravity” logic of inserting a piece into the lowest available row of the chosen column. 
+Win detection is handled by checkWin, which uses a private helper countDirection to count consecutive pieces belonging to the current player in four directions (horizontal, vertical, and two diagonals) starting from the last move. 
+The class also implements checkTie to determine if the board is completely full, switchPlayer to toggle between X and O, and a set of methods for file I/O: loadGameFromFile and saveGameToFile handle serialization of the board and current game state, while loadStatsFromFile and saveStatsToFile manage persistent win stats. 
+Finally, printStats and simple accessor methods (e.g., getCurrentPlayer, getPlayerXWins, getPlayerOWins) provide safe read access for the user interface code.
+
+Creating this class significantly improved the structure of my program. 
+The main function only manages high‑level flow (menus, starting or resuming games, and printing stats) and delegates all game logic, win detection, and file persistence to ConnectFourGame. This separation made it easier to reason about the game mechanics, test individual behaviors in isolation, and would make future extensions much simpler to implement.
+
+LIST DATA STRUCTURE:
+I chose to use a 2D vector, specifically std::vector< std::vector<char> >, as the primary list data structure inside ConnectFourGame. 
+Each inner vector represents a row of the board, and each element stores a single cell as a character: a space for empty, or 'X'/'O' for the players. 
+This structure matches the natural 2D grid of a Connect 4 board and makes indexing by row and column straightforward. 
+Using vectors gives me dynamic allocation and bounds‑checked access via .at(), which helps catch out‑of‑range errors during development.
+
+The 2D vector works especially well for win detection. T
+To check for four in a row, I can start from the last move’s (row, col) position and scan outward along each direction (left/right, up/down, and the two diagonals) using fixed row/column deltas. 
+This allows simple loops like (deltaRow, deltaCol) = (0, 1) for horizontal or (1, 1) for a diagonal, and the underlying vector indexing remains simple and readable. 
+I considered an additional 1D std::vector<int> to track the next free row for each column, but the basic 2D vector alone was sufficient to implement dropping logic and win checking clearly, so I prioritized simplicity and clarity over optimizing that piece of state.
+
+FILE I/O:
+File I/O is used in two places: saving/loading the current game state and saving/loading cumulative win statistics. 
+All file operations are done using std::ifstream and std::ofstream from the C++ standard library, with the files located in the same directory as main.cpp.
+
+The methods loadGameFromFile(const std::string& filename) and saveGameToFile(const std::string& filename) const handle reading and writing the current game. 
+The save format includes the number of rows and columns, the entire board contents (each cell as a character), the current player, the number of moves played so far, and the current values of the win counters. 
+This allows the program to reconstruct the exact game state when loading, so the user can resume a saved game at any point. 
+The stats file is managed by loadStatsFromFile(const std::string& filename) and saveStatsToFile(const std::string& filename) const, which read and write the total wins for players X and O. 
+These are simple space‑separated integers, making the stats file easy to inspect and debug manually if needed. File I/O is necessary in this context so that players can continue a game across runs and keep a running record of wins instead of resetting stats every time the program exits.
+
+PROJECT MODIFICATIONS:
+The final implementation closely follows my original proposal, but a few small details changed as I refined the design. 
+In the proposal, I described dropPiece(int col) returning a boolean and separately “determining” lastRow and lastCol after the call. 
+In the final implementation, dropPiece takes int& lastRow and int& lastCol as reference parameters and sets them directly when the piece is placed.
+This change keeps the logic localized and avoids duplicating the search for the landing row outside the class. 
+I also implemented a private helper function countDirection and an isInBounds check to keep the win detection code concise and avoid off‑by‑one mistakes when scanning in each direction from the last move.
+
+I originally considered adding a separate std::vector<int> to track the next free row in each column to speed up piece placement, but this turned out to be unnecessary for a small fixed‑size board, and it would have complicated keeping the state consistent. 
+Instead, I used a simple loop from the bottom row up to find the first empty cell, which is easier to read and maintain. Another minor change was in how stats are updated: although the proposal described incrementing playerXWins or playerOWins directly in the main game loop, in practice this logic is handled in coordination with the ConnectFourGame class and the stats file methods, so that stats remain encapsulated and consistent with saved state. 
+
+Overall, these changes were made to simplify the code, improve encapsulation, and reduce the chance of bugs in indexing and file parsing.
+
+REFLECTIONS:
+From this project, I learned a lot about designing and implementing a non‑trivial program with a custom class that actually does meaningful work, not just storing data. 
+Implementing win detection for Connect 4 forced me to think carefully about indexing, boundaries, and how to generalize “scan in a direction” logic so I did not repeat myself and did not introduce off‑by‑one errors. 
+Encapsulating the game state and logic in ConnectFourGame made my main function much cleaner and helped me see the value of separating responsibilities and programming to a clear interface.
+
+I also gained more confidence with file I/O and thinking about simple, robust text formats that are easy to load and debug. 
+Testing the load/save behavior and tie/win conditions reminded me how important it is to consider edge cases (full columns, full boards, invalid input). 
+If I were to do another project like this, I would start by writing small tests for individual methods earlier, and I would design the save file format first instead of evolving it as I implemented. 
+I would also consider adding more advanced features like an AI opponent, but I now understand how much cleaner that would be if the core game logic is already well‑encapsulated, as it is here.
